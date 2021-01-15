@@ -5,6 +5,7 @@
 
     <modules>
         <module>eureka-server</module>
+        <module>cms</module>
     </modules>
 
     <groupId>com.yhb</groupId>
