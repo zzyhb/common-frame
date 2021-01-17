@@ -1,6 +1,5 @@
 package com.yhb.redis.controller;
 
-import com.yhb.redis.annotation.NeedPrintLog;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
