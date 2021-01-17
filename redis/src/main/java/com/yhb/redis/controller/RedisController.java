@@ -1,5 +1,6 @@
 package com.yhb.redis.controller;
 
+import com.yhb.redis.annotation.NeedPrintLog;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,14 +28,14 @@ public class RedisController {
     }
 
     @PostMapping("/string/set")
-    public ResponseResult<Void> setRedisStringValue(@RequestBody @Validated RedisStringValueVO redisStringValue) {
+    public ResponseResult<String> setRedisStringValue(@RequestBody @Validated RedisStringValueVO redisStringValue) {
         this.redisService.setStringValueExpire(redisStringValue.getKey(), redisStringValue.getValue(),
                 redisStringValue.getExpireTime());
-        return ResponseResult.success();
+        return ResponseResult.success(redisStringValue.getKey());
     }
 
     @GetMapping("/string/get")
-    public void getRedisStringValue(@RequestParam String key) {
-        this.redisService.getStringValue(key);
+    public ResponseResult<String> getRedisStringValue(@RequestParam String key) {
+        return ResponseResult.success(this.redisService.getStringValue(key));
     }
 }

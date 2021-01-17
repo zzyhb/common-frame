@@ -30,5 +30,8 @@ public class ResponseResult<T> {
     public static <T> ResponseResult<T> success(String message, T data) {
         return new ResponseResult<>(true, message, data);
     }
+    public static <T> ResponseResult<T> fail(String message) {
+        return new ResponseResult<>(false, message, null);
+    }
 
 }
