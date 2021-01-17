@@ -18,10 +18,8 @@ public interface RedisService {
      *         值
      * @param expireTime
      *         过期时间
-     *
-     * @return 结果
      */
-    boolean setStringValueExpire(String key, String value, Integer expireTime);
+    void setStringValueExpire(String key, String value, Integer expireTime);
 
     /**
      * 获取string类型的值

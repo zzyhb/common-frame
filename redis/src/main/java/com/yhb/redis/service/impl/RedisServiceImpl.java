@@ -1,13 +1,10 @@
 package com.yhb.redis.service.impl;
 
-import java.util.Objects;
-
-import org.springframework.stereotype.Service;
-
 import com.yhb.redis.service.RedisService;
-
 import lombok.extern.slf4j.Slf4j;
-import redis.clients.jedis.JedisPool;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.stereotype.Service;
 
 /**
  * @author fusu
@@ -19,21 +16,21 @@ public class RedisServiceImpl implements RedisService {
 
     private final static String SUCCESS = "OK";
 
-    private final JedisPool jedisPool;
+    private final RedisTemplate<String, String> redisTemplate;
 
-    public RedisServiceImpl(JedisPool jedisPool) {
-        this.jedisPool = jedisPool;
+    public RedisServiceImpl(RedisTemplate<String, String> redisTemplate) {
+        this.redisTemplate = redisTemplate;
     }
 
     @Override
-    public boolean setStringValueExpire(String key, String value, Integer expireTime) {
-        String result = this.jedisPool.getResource().setex(key, expireTime, value);
-        log.info("RedisServiceImpl setStringValueExpire result : {}", result);
-        return Objects.equals(SUCCESS, result);
+    public void setStringValueExpire(String key, String value, Integer expireTime) {
+        ValueOperations<String, String> opsForValue = this.redisTemplate.opsForValue();
+        opsForValue.set(key, value, expireTime);
     }
 
     @Override
     public String getStringValue(String key) {
-        return this.jedisPool.getResource().get(key);
+        ValueOperations<String, String> opsForValue = this.redisTemplate.opsForValue();
+        return opsForValue.get(key);
     }
 }

@@ -19,6 +19,10 @@ public class ResponseResult<T> {
 
     private T data;
 
+    public static <T> ResponseResult<T> success() {
+        return new ResponseResult<>(true, null, null);
+    }
+
     public static <T> ResponseResult<T> success(T data) {
         return new ResponseResult<>(true, null, data);
     }

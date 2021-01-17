@@ -1,15 +1,10 @@
 package com.yhb.redis.config;
 
-import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.RedisConfiguration;
-
-import lombok.extern.slf4j.Slf4j;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
+import org.springframework.data.redis.core.RedisTemplate;
 
 /**
  * @author fusu
@@ -47,17 +42,8 @@ public class RedisConfig {
     private int minIdle;
 
     @Bean
-    public JedisPool jedisClient(){
-        JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
-        jedisPoolConfig.setMaxTotal(maxTotal);
-        jedisPoolConfig.setMaxWaitMillis(maxWait);
-        jedisPoolConfig.setMaxIdle(maxIdle);
-        jedisPoolConfig.setMinIdle(minIdle);
-        JedisPool jedisPool = new JedisPool(jedisPoolConfig, url, port, timeout, null, database);
-        log.info("JedisPool注入成功！！");
-        log.info("redis地址：{}, port: {}", url, port);
-        return jedisPool;
-
+    public RedisTemplate<String, Object> redisTemplate(){
+        return new RedisTemplate<>();
     }
 
 }

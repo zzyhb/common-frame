@@ -27,10 +27,10 @@ public class RedisController {
     }
 
     @PostMapping("/string/set")
-    public ResponseResult<Boolean> setRedisStringValue(@RequestBody @Validated RedisStringValueVO redisStringValue) {
-        return ResponseResult.success(
-                this.redisService.setStringValueExpire(redisStringValue.getKey(), redisStringValue.getValue(),
-                        redisStringValue.getExpireTime()));
+    public ResponseResult<Void> setRedisStringValue(@RequestBody @Validated RedisStringValueVO redisStringValue) {
+        this.redisService.setStringValueExpire(redisStringValue.getKey(), redisStringValue.getValue(),
+                redisStringValue.getExpireTime());
+        return ResponseResult.success();
     }
 
     @GetMapping("/string/get")
