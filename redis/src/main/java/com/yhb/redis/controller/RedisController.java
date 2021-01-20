@@ -35,6 +35,7 @@ public class RedisController {
 
     @GetMapping("/string/get")
     public ResponseResult<String> getRedisStringValue(@RequestParam String key) {
+
         return ResponseResult.success(this.redisService.getStringValue(key));
     }
 }

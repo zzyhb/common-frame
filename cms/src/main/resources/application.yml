@@ -8,11 +8,17 @@ spring:
     url: jdbc:mysql://localhost:3306/ifugle?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
     password: 147258369
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver # MYSQL 5 驱动：com.mysql.jdbc.Driver，MYSQL 6+ 驱动：com.mysql.cj.jdbc.Driver
 
 eureka:
   client:
     serviceUrl: #注册中心的注册地址
       defaultZone: http://127.0.0.1:8761/eureka/
+
+feign:
+  hystrix:
+    enabled: true
 
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
