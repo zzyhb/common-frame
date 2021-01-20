@@ -5,7 +5,7 @@ spring:
   application:
     name: cms #服务名称--调用的时候根据名称来调用该服务的方法
   datasource:
-    url: jdbc:mysql://localhost:3306/ifugle?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://localhost:3306/ifugle?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
     password: 147258369
     type: com.alibaba.druid.pool.DruidDataSource

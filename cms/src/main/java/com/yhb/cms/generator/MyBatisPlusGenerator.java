@@ -1,19 +1,10 @@
 package com.yhb.cms.generator;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
-import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
-import com.baomidou.mybatisplus.generator.config.FileOutConfig;
-import com.baomidou.mybatisplus.generator.config.GlobalConfig;
-import com.baomidou.mybatisplus.generator.config.PackageConfig;
-import com.baomidou.mybatisplus.generator.config.StrategyConfig;
-import com.baomidou.mybatisplus.generator.config.TemplateConfig;
+import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.LikeTable;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
@@ -21,7 +12,9 @@ import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
 import com.yhb.common.other.NullUtil;
 
-import cn.hutool.setting.dialect.Props;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 /**
  * MyBatisPlus代码生成器
@@ -31,14 +24,13 @@ public class MyBatisPlusGenerator {
 
     public static void main(String[] args) {
         String projectPath = System.getProperty("user.dir");
-        String moduleName = scanner("模块名");
         String[] tableNames = scanner("表名，多个英文逗号分割").split(",");
         // 代码生成器
         AutoGenerator autoGenerator = new AutoGenerator();
         autoGenerator.setGlobalConfig(initGlobalConfig(projectPath));
         autoGenerator.setDataSource(initDataSourceConfig());
-        autoGenerator.setPackageInfo(initPackageConfig(moduleName));
-        autoGenerator.setCfg(initInjectionConfig(projectPath, moduleName));
+        /*autoGenerator.setPackageInfo(initPackageConfig(moduleName));
+        autoGenerator.setCfg(initInjectionConfig(projectPath, moduleName));*/
         autoGenerator.setTemplate(initTemplateConfig());
         autoGenerator.setStrategy(initStrategyConfig(tableNames));
         autoGenerator.setTemplateEngine(new VelocityTemplateEngine());
@@ -85,12 +77,11 @@ public class MyBatisPlusGenerator {
      * 初始化数据源配置
      */
     private static DataSourceConfig initDataSourceConfig() {
-        Props props = new Props("generator.properties");
         DataSourceConfig dataSourceConfig = new DataSourceConfig();
-        dataSourceConfig.setUrl(props.getStr("dataSource.url"));
-        dataSourceConfig.setDriverName(props.getStr("dataSource.driverName"));
-        dataSourceConfig.setUsername(props.getStr("dataSource.username"));
-        dataSourceConfig.setPassword(props.getStr("dataSource.password"));
+        dataSourceConfig.setUrl("jdbc:mysql://localhost:3306/ifugle?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai");
+        dataSourceConfig.setDriverName("com.mysql.cj.jdbc.Driver");
+        dataSourceConfig.setUsername("root");
+        dataSourceConfig.setPassword("147258369");
         return dataSourceConfig;
     }
 
@@ -98,10 +89,9 @@ public class MyBatisPlusGenerator {
      * 初始化包配置
      */
     private static PackageConfig initPackageConfig(String moduleName) {
-        Props props = new Props("generator.properties");
         PackageConfig packageConfig = new PackageConfig();
         packageConfig.setModuleName(moduleName);
-        packageConfig.setParent(props.getStr("package.base"));
+        packageConfig.setParent("com.yhb");
         packageConfig.setEntity("model");
         return packageConfig;
     }
