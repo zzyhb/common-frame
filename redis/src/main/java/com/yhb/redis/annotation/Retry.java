@@ -8,7 +8,9 @@ import java.lang.annotation.*;
  * @author Yhb
  */
 @Documented
-@Target({ElementType.METHOD, ElementType.TYPE})
+@Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface NeedPrintLog {
+public @interface Retry {
+    // 默认重试两次
+    int times() default 2;
 }

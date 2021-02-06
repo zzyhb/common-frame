@@ -24,8 +24,6 @@ public class NeedPrintLogAspect {
 
     }
 
-    ;
-
     @Around("pointcut()")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         StringBuilder sb = new StringBuilder(300);

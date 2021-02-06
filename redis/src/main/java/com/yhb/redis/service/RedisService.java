@@ -24,6 +24,18 @@ public interface RedisService {
     void setStringValueExpire(String key, String value, Integer expireTime);
 
     /**
+     * 存储string类型的值 不存在才能塞值
+     *
+     * @param key
+     *         键
+     * @param value
+     *         值
+     * @param expireTime
+     *         过期时间
+     */
+    Boolean setStringValueExpireIfAbsent(String key, String value, Integer expireTime);
+
+    /**
      * 获取string类型的值
      *
      * @param key
@@ -57,7 +69,12 @@ public interface RedisService {
     /**
      * 获取list类型的值
      */
-    List<Object> getListValue(String key, Long startIndex, Long stopIndex);
+    List<Object> getAllListValue(String key);
+
+    /**
+     * 获取list类型的值
+     */
+    List<Object> getRangedListValue(String key, Long startIndex, Long stopIndex);
 
     /********************/
     /* 4、set类型操作 */
@@ -84,5 +101,19 @@ public interface RedisService {
      * 获取sortedSet类型的值
      */
     Object getSortedSetValue(String key);
+
+    /********************/
+    /* 通用操作 */
+    /*******************/
+    /**
+     * 删除缓存值
+     *
+     * @param key
+     *         键
+     *
+     * @return 值
+     */
+
+    Boolean deleteValue(String key);
 
 }

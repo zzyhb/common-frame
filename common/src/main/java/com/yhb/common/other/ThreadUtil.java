@@ -19,35 +19,11 @@ public class ThreadUtil {
 
     private static volatile ThreadUtil threadUtil;
 
-    private final ThreadPoolExecutor singleThreadPool = singlePool("dsb-single");
+    private final ThreadPoolExecutor singleThreadPool = singleThreadPool();
 
-    private final ThreadPoolExecutor mqThreadPool = mqThreadPool("dsb-mq-pool");
+    private final ThreadPoolExecutor commonThreadPool = commonThreadPool();
 
     private ThreadUtil() {
-    }
-
-    /**
-     * 用于mq发送 线程池
-     *
-     * @param poolName
-     *
-     * @return
-     */
-    private static ThreadPoolExecutor mqThreadPool(String poolName) {
-        return new ThreadPoolExecutor(3, 3, 60L, TimeUnit.SECONDS, new LinkedBlockingQueue<>(),
-                new ThreadFactoryBuilder().setNameFormat(poolName).build());
-    }
-    
-    /**
-     * 单线程池，用于application监听事件处理
-     *
-     * @param poolName
-     *
-     * @return
-     */
-    private static ThreadPoolExecutor singlePool(String poolName) {
-        return new ThreadPoolExecutor(1, 1, 0L, TimeUnit.MICROSECONDS, new LinkedBlockingQueue<>(),
-                new ThreadFactoryBuilder().setNameFormat(poolName).build());
     }
 
     public static ThreadUtil build() {
@@ -62,20 +38,40 @@ public class ThreadUtil {
     }
 
     /**
-     * 用于简单的任务异步
+     * 单线程线程池
      *
      * @return
      */
-    public ThreadPoolExecutor singlePool() {
+    public ThreadPoolExecutor getSinglePool() {
         return singleThreadPool;
     }
 
     /**
-     * 用于mq发送异步
+     * 通用线程池
      *
      * @return
      */
-    public ThreadPoolExecutor mqThreadPool() {
-        return mqThreadPool;
+    private static ThreadPoolExecutor commonThreadPool() {
+        return new ThreadPoolExecutor(3, 3, 60L, TimeUnit.SECONDS, new LinkedBlockingQueue<>(),
+                new ThreadFactoryBuilder().setNameFormat("common-pool").build());
+    }
+    
+    /**
+     * 单线程池
+     *
+     * @return
+     */
+    private static ThreadPoolExecutor singleThreadPool() {
+        return new ThreadPoolExecutor(1, 1, 0L, TimeUnit.MICROSECONDS, new LinkedBlockingQueue<>(),
+                new ThreadFactoryBuilder().setNameFormat("single").build());
+    }
+
+    /**
+     * 通用线程池
+     *
+     * @return
+     */
+    public ThreadPoolExecutor getCommonThreadPool() {
+        return commonThreadPool;
     }
 }

@@ -1,10 +1,12 @@
 package com.yhb.redis.service.impl;
 
 import com.yhb.redis.annotation.NeedPrintLog;
+import com.yhb.redis.annotation.Retry;
 import com.yhb.redis.service.RedisService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -44,6 +46,12 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
+    @NeedPrintLog
+    public Boolean setStringValueExpireIfAbsent(String key, String value, Integer expireTime) {
+        return this.valueRedisOperations.setIfAbsent(key, value, expireTime, TimeUnit.SECONDS);
+    }
+
+    @Override
     public void setStringValueExpire(String key, String value, Integer expireTime) {
         this.valueRedisOperations.set(key, value, expireTime, TimeUnit.SECONDS);
     }
@@ -72,7 +80,14 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
-    public List<Object> getListValue(String key, Long startIndex, Long stopIndex) {
+    public List<Object> getAllListValue(String key) {
+        Long finalIndex = this.listRedisOperations.size(key);
+        Assert.notNull(finalIndex, "redis list size get error");
+        return this.listRedisOperations.range(key, 0, 1);
+    }
+
+    @Override
+    public List<Object> getRangedListValue(String key, Long startIndex, Long stopIndex) {
         return this.listRedisOperations.range(key, startIndex, stopIndex);
     }
 
@@ -96,6 +111,12 @@ public class RedisServiceImpl implements RedisService {
     @Override
     public Object getSortedSetValue(String key) {
         return this.setRedisOperations.pop(key);
+    }
+
+    @Override
+    @Retry(times = 3)
+    public Boolean deleteValue(String key) {
+        return this.redisTemplate.delete(key);
     }
 
 }

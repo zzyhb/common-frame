@@ -12,6 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @FeignClient(name = "redis", fallback = RemoteRedisServiceHystrix.class)
 public interface RemoteRedisService {
 
-    @GetMapping(value = "/test/test")
+    @GetMapping(value = "/redis/test")
     String test();
 }
