@@ -32,8 +32,9 @@ mybatis-plus:
 aliyun:
   file:
     endpoint: https://oss-cn-hangzhou.aliyuncs.com
-    accessKeyId: LTAI4Fydd4aPR89HRfDaYTBp
-    accessKeySecret: gVyotP7q5dzQSmZo7gtVVVfN25QjMM
+    # oss 为了安全起见 RAM账户暂时不使用
+    accessKeyId:
+    accessKeySecret: 
     bucketName: oss-yhb
     folder : ifugle
     webUrl: https://oss-yhb.oss-cn-hangzhou.aliyuncs.com
