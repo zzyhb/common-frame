@@ -20,7 +20,7 @@ import java.util.concurrent.Future;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = RedisApplication.class)
-public class Test {
+public class Solution {
 
     @Autowired
     private RedisDistributedLock redisDistributedLock;

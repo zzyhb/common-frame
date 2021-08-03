@@ -1,5 +1,7 @@
 package com.yhb.redis.service;
 
+import com.yhb.redis.vo.RedisListValueVO;
+
 import java.util.List;
 
 /**
@@ -64,7 +66,7 @@ public interface RedisService {
     /**
      * 存储list类型的值
      */
-    Boolean setListValueExpire(String key, List<Object> value, Integer expireTime);
+    Boolean setListValueExpire(String key, List<RedisListValueVO.Temp> value, Integer expireTime);
 
     /**
      * 获取list类型的值

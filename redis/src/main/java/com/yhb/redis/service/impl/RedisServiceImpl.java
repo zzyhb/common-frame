@@ -3,6 +3,7 @@ package com.yhb.redis.service.impl;
 import com.yhb.redis.annotation.NeedPrintLog;
 import com.yhb.redis.annotation.Retry;
 import com.yhb.redis.service.RedisService;
+import com.yhb.redis.vo.RedisListValueVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import org.springframework.util.Assert;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * @author fusu
@@ -74,8 +76,8 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
-    public Boolean setListValueExpire(String key, List<Object> value, Integer expireTime) {
-        this.listRedisOperations.leftPushAll(key, value);
+    public Boolean setListValueExpire(String key, List<RedisListValueVO.Temp> value, Integer expireTime) {
+        this.listRedisOperations.leftPushAll(key, value.toArray());
         return this.redisTemplate.expire(key, expireTime, TimeUnit.SECONDS);
     }
 
@@ -83,7 +85,7 @@ public class RedisServiceImpl implements RedisService {
     public List<Object> getAllListValue(String key) {
         Long finalIndex = this.listRedisOperations.size(key);
         Assert.notNull(finalIndex, "redis list size get error");
-        return this.listRedisOperations.range(key, 0, 1);
+        return this.listRedisOperations.range(key, 0, -1);
     }
 
     @Override
